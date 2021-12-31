@@ -31,6 +31,7 @@ public class Utils {
 
     public static String tempFolder() {
         return nonNull(
+                () -> System.getProperty("java.io.tmpdir"),
                 () -> System.getenv("TEMP"),
                 () -> System.getenv("TMP"),
                 Utils::workingDir
