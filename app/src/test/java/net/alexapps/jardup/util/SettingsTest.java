@@ -29,4 +29,13 @@ public class SettingsTest {
         assertTrue(settings.excludeDir("dirA1"));
         assertTrue(settings.excludeDir("dirA2"));
     }
+
+    @Test public void excludeClasses() {
+        Settings settings = new Settings("--exclude-class=.*/Test.class");
+        assertTrue(settings.excludeClass("net/alexapps/jardup/Test.class"));
+        assertTrue(settings.excludeClass("net/alexapps/Test.class"));
+        assertFalse(settings.excludeClass("net/alexapps/jardup/Foo.class"));
+        assertFalse(settings.excludeClass("Bar.class"));
+        assertFalse(settings.excludeClass("/com/company1/Bar.class"));
+    }
 }

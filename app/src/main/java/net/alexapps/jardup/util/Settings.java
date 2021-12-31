@@ -7,15 +7,18 @@ import java.util.regex.Pattern;
 public class Settings {
     private static final String OPT_EXCLUDE_DIR = "--exclude-dir";
     private static final String OPT_EXCLUDE_JAR = "--exclude-jar";
+    private static final String OPT_EXCLUDE_CLASS = "--exclude-class";
 
     private final ArrayList<String> _roots;
     private final ArrayList<Pattern> _excludeDirRegExes;
     private final ArrayList<Pattern> _excludeJarRegExes;
+    private final ArrayList<Pattern> _excludeClassRegExes;
 
     public Settings(String... args) {
         _roots = new ArrayList<>();
         _excludeDirRegExes = new ArrayList<>();
         _excludeJarRegExes = new ArrayList<>();
+        _excludeClassRegExes = new ArrayList<>();
 
         for (String arg : args) {
             if (arg.startsWith(OPT_EXCLUDE_JAR + "=")) {
@@ -24,6 +27,9 @@ public class Settings {
             } else if (arg.startsWith(OPT_EXCLUDE_DIR + "=")) {
                 String pattern = arg.substring(OPT_EXCLUDE_DIR.length() + 1);
                 _excludeDirRegExes.add(Pattern.compile(pattern));
+            } else if (arg.startsWith(OPT_EXCLUDE_CLASS + "=")) {
+                String pattern = arg.substring(OPT_EXCLUDE_CLASS.length() + 1);
+                _excludeClassRegExes.add(Pattern.compile(pattern));
             } else {
                 _roots.add(arg);
             }
@@ -52,5 +58,9 @@ public class Settings {
 
     public boolean excludeDir(String dir) {
         return matches(dir, _excludeDirRegExes);
+    }
+
+    public boolean excludeClass(String cls) {
+        return matches(cls, _excludeClassRegExes);
     }
 }

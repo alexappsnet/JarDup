@@ -21,7 +21,7 @@ public class App {
     public void run() {
         Collection<String> folders = new FolderFinder(_logger, _settings).find();
         Collection<String> jars = new JarFinder(_logger, _settings).find(folders);
-        Collection<ClassInfo> classes = ClassFinder.find(jars);
+        Collection<ClassInfo> classes = new ClassFinder(_logger, _settings).find(jars);
         Collection<DupInfo> dupInfos = DupFinder.find(classes, _logger);
         DupReporter.report(dupInfos, _logger);
     }

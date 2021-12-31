@@ -19,10 +19,12 @@ public class FolderFinder {
     }
 
     public ArrayList<String> find() {
+        _logger.setStdoutLimit(5, "...");
         HashSet<String> folders = new HashSet<>();
         for (String root : _settings.getRoots()) {
             find(new File(root), folders);
         }
+        _logger.resetStdoutLimit();
         return sorted(folders);
     }
 
@@ -31,9 +33,7 @@ public class FolderFinder {
             return;
 
         if (_settings.excludeDir(root.getName())) {
-            String message = "Excluded: " + root;
-            _logger.file(message);
-            _logger.stdout(message);
+            _logger.both("Excluded: " + root);
             return;
         }
 
