@@ -5,13 +5,16 @@ Searches recursively for all classes in all jar files and reports the duplicates
 # How to run
 
 ```
-$ java -jar jardup.jar .
+$ java -jar jardup.jar [--exclude-dir=<regex>] [--exclude-jar=<regex>] [--exclude-class=<regex>] [<root dir]
 ```
+
+Example:
+```
+$ java -jar jardup.jar .
 
 or
 
-```
-$ java -jar jardup.jar folder1 folder2
+$ java -jar jardup.jar --exclude-jar=my.* folder1 folder2
 ```
 
 # Output example
