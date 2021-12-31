@@ -21,4 +21,12 @@ public class SettingsTest {
         assertTrue(settings.excludeJar("abcd1.jar"));
         assertFalse(settings.excludeJar("bcd.jar"));
     }
+
+    @Test public void excludeDirs() {
+        Settings settings = new Settings("--exclude-dir=dirA.*");
+        assertFalse(settings.excludeDir("dirB"));
+        assertTrue(settings.excludeDir("dirA"));
+        assertTrue(settings.excludeDir("dirA1"));
+        assertTrue(settings.excludeDir("dirA2"));
+    }
 }

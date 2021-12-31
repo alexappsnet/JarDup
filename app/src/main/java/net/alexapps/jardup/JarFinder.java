@@ -51,8 +51,9 @@ public class JarFinder {
 
     private void addJar(File jar, Collection<String> jars) {
         if (_settings.excludeJar(jar.getName())) {
-            _logger.file("    " + jar + " (excluded)");
-            _logger.stdout("    " + jar + " (excluded)");
+            String message = "    Excluded: " + jar;
+            _logger.file(message);
+            _logger.stdout(message);
         } else {
             _logger.both("    " + jar);
             jars.add(jar.getPath());

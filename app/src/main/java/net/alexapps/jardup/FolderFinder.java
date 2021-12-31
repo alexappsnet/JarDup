@@ -1,5 +1,6 @@
 package net.alexapps.jardup;
 
+import net.alexapps.jardup.util.Logger;
 import net.alexapps.jardup.util.Settings;
 
 import java.io.File;
@@ -9,17 +10,32 @@ import java.util.HashSet;
 import static net.alexapps.jardup.util.Utils.sorted;
 
 public class FolderFinder {
-    public static ArrayList<String> find(Settings settings) {
+    private final Logger _logger;
+    private final Settings _settings;
+
+    public FolderFinder(Logger logger, Settings settings) {
+        _logger = logger;
+        _settings = settings;
+    }
+
+    public ArrayList<String> find() {
         HashSet<String> folders = new HashSet<>();
-        for (String root : settings.getRoots()) {
+        for (String root : _settings.getRoots()) {
             find(new File(root), folders);
         }
         return sorted(folders);
     }
 
-    private static void find(File root, HashSet<String> folders) {
+    private void find(File root, HashSet<String> folders) {
         if (!root.isDirectory())
             return;
+
+        if (_settings.excludeDir(root.getName())) {
+            String message = "Excluded: " + root;
+            _logger.file(message);
+            _logger.stdout(message);
+            return;
+        }
 
         if (!folders.add(root.getPath()))
             return;
