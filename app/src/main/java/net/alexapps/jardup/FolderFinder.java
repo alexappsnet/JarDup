@@ -1,16 +1,17 @@
 package net.alexapps.jardup;
 
+import net.alexapps.jardup.util.Settings;
+
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 
 import static net.alexapps.jardup.util.Utils.sorted;
 
 public class FolderFinder {
-    public static ArrayList<String> find(Collection<String> roots) {
+    public static ArrayList<String> find(Settings settings) {
         HashSet<String> folders = new HashSet<>();
-        for (String root : roots) {
+        for (String root : settings.getRoots()) {
             find(new File(root), folders);
         }
         return sorted(folders);
